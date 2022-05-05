@@ -12,7 +12,8 @@ using namespace std;
 namespace bblProgII
 {
     //-------------------------------------
-
+    //-------------------------------------
+    
     // Constructor por defecto
     Centros::Centros()
     {
