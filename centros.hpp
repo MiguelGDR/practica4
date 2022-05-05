@@ -51,23 +51,9 @@ public:
 	// Devuelve el número de centros de la lista.
 	//-------------------------------------
 	// Operdores sobrecargados (implementados on-line por el profesor)
-	bool operator==(const Centros &otra_lista) const{
-		bool iguales = true;
-		iguales = n_centros == otra_lista.n_centros;
-
-		unsigned i = 0;
-		while(iguales && i < n_centros){
-			iguales = centros[i] == otra_lista.centros[i];
-			i++;
-		}
-		return iguales;
-	}
+	bool operator==(const Centros &otra_lista) const;
 	//-------------------------------------
-	std::string operator[](unsigned i) const{
-		assert(i < n_centros);
-
-		return centros[i];
-	}
+	std::string operator[](unsigned i) const;
 private:
 	static const unsigned MAX_centros = 10;
 	std::array<std::string, MAX_centros> centros;
