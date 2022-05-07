@@ -58,7 +58,7 @@ void test_insertar()
 	menores.insertar("Sandra", "Virgen de la Victoria", ok);
 	assert(ok);
 	centros3.insertar_centro("Virgen de la Victoria", ok);
-	//assert(menores.num_centros() == 3);
+	assert(menores.num_centros() == 3);
 	assert(menores.get_id_pos(2) == "Sandra");
 	assert(menores.get_centros_pos(2) == centros3);
 	assert(menores.get_id_pos(0) == "Ana");
