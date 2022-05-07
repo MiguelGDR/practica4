@@ -39,30 +39,43 @@ void Menores::insertar(const std::string &identificador, std::string centro, boo
 {
     Lista ptr;
     bool flag = 0;
-    if (menores != nullptr) // Si no es nullpointer (contiene elementos), entra en el if
+    ptr = menores;
+    if (ptr != nullptr) // Si no es nullpointer (contiene elementos), entra en el if
     {
-        ptr = menores;
-        while (ptr->sig != nullptr && !flag)
+        while (ptr != nullptr && !flag) // No está vacia la lista
         {
-            if (ptr->id == identificador)
+            cout << identificador << ptr->id << endl;
+            if (ptr->id == identificador) // Si está el id, añado el centro
             {
                 ptr->centros.insertar_centro(centro, insertado); // Inserto el centro
                 flag = 1;                                        // Cambio flag para salir del bucle
+                cout << endl;
+                cout << "Lista ya contenia id, y le anado centro." << endl;
+                cout << endl;
             }
             ptr = ptr->sig;
         }
 
-        if (!flag) // Si no estaba el id en la lista, lo añado
+        if (!flag) // Si no estaba el id en la lista, lo añado. Despues añado el centro
         {
-            ptr = menores; // Reinicio el puntero
-            Lista nuevo_nodo = new Nodo;
-            nuevo_nodo->id = identificador;
-            nuevo_nodo->centros.insertar_centro(centro, insertado);
-            bool done = false;
+            cout << "No estaba en la lista, lo incluyo." << endl;
+            ptr = menores;                                          // Reinicio el puntero
+            Lista nuevo_nodo = new Nodo;                            // Creo un nuevo nodo
+            nuevo_nodo->id = identificador;                         // donde guardo el id
+            nuevo_nodo->centros.insertar_centro(centro, insertado); // e inserto el centro.
 
-            while (ptr->sig != nullptr && !done)
+            bool done = false; // Declaro variable flag para salir del bucle.
+
+            if (ordenLex(identificador, menores->id)) // Si se da el caso de que el id es el primero, se añade al principio
             {
-                if (ordenLex(identificador, ptr->id)) // Si es 1, identificador < ptr->id.
+                nuevo_nodo->sig = ptr;
+                menores = nuevo_nodo;
+                cout << "Es primero." << endl;
+            }
+
+            while (ptr != nullptr && !done)
+            {
+                if (ordenLex(identificador, ptr->id)) // Si es 1, identificador < ptr->id (orden lexicográfico).
                 {
                     nuevo_nodo->sig = ptr; // Enlazo
                     ptr = nuevo_nodo;      // Inserto el nuevo nodo
@@ -70,13 +83,32 @@ void Menores::insertar(const std::string &identificador, std::string centro, boo
                 }
                 ptr = ptr->sig;
             }
+
+            if (!done) // Quiere decir que salió del bucle while porque llego al final y no insertó el id
+            {
+                ptr = menores;   
+                while(ptr->sig != nullptr)
+                {
+                    ptr = ptr->sig;
+                }
+                ptr->sig = new Nodo; 
+                ptr->sig = nuevo_nodo;
+                nuevo_nodo->sig = ptr->sig->sig;
+                ptr->sig->sig = nullptr;
+            }
         }
     }
-    else // Si menores == nullptr (lista vacia), añado el primer elemento
+    else // Si ptr == nullptr (lista vacia), añado el primer elemento
     {
-        menores->id = identificador;
-        menores->centros.insertar_centro(centro, insertado);
-        menores->sig = nullptr;
+        ptr = new Nodo;
+        ptr->id = identificador;
+        ptr->centros.insertar_centro(centro, insertado);
+        ptr->sig = nullptr;
+        menores = ptr;
+
+        cout << endl;
+        cout << "Lista vacia, añado primer id" << endl;
+        cout << endl;
     }
 }
 
@@ -84,10 +116,10 @@ unsigned Menores::num_centros() const
 {
     Lista ptr;
     ptr = menores;
-    unsigned i;
-    while(ptr != nullptr)
+    unsigned i = 0;
+    while (ptr != nullptr)
     {
-        i++;
+        i += 1;
         ptr = ptr->sig;
     }
     return i;
