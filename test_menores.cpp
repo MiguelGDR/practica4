@@ -12,7 +12,6 @@
 using namespace std;
 using namespace bblProgII;
 
-
 //--------------------------------------------------------------------------
 void test_insertar()
 {
@@ -48,7 +47,6 @@ void test_insertar()
 	assert(menores.get_id_pos(1) == "Pepe");
 	assert(menores.get_centros_pos(1) == centros1);
 
-
 	menores.insertar("Sandra", "Virgen de la Esperanza", ok);
 	assert(ok);
 	centros3.insertar_centro("Virgen de la Esperanza", ok);
@@ -65,9 +63,8 @@ void test_insertar()
 	assert(menores.get_centros_pos(0) == centros2);
 	assert(menores.get_id_pos(1) == "Pepe");
 	assert(menores.get_centros_pos(1) == centros1);
-
 }
-/*
+
 //-----------------------------------------------------------
 void test_eliminar()
 {
@@ -138,6 +135,7 @@ void test_eliminar()
 
 	assert(menores == Menores());
 }
+/*
 //--------------------------------------------------------------------------
 void test_consultar()
 {
@@ -147,27 +145,27 @@ void test_consultar()
 
 	menores.consultar("Pepe", cntrs); assert(cntrs.empty());
 	menores.insertar("Pepe", "Virgen de la Esperanza", ok);
-	menores.consultar("Pepe", cntrs); assert(cntrs == "Virgen de la Esperanza-");	
+	menores.consultar("Pepe", cntrs); assert(cntrs == "Virgen de la Esperanza-");
 	menores.insertar("Pepe", "Ciudad de los Niños", ok);
-	menores.consultar("Pepe", cntrs); assert(cntrs == "Ciudad de los Niños-Virgen de la Esperanza-");		
+	menores.consultar("Pepe", cntrs); assert(cntrs == "Ciudad de los Niños-Virgen de la Esperanza-");
 	menores.insertar("Pepe", "Virgen de la Victoria", ok);
-	menores.consultar("Pepe", cntrs); assert(cntrs == "Ciudad de los Niños-Virgen de la Esperanza-Virgen de la Victoria-");		
+	menores.consultar("Pepe", cntrs); assert(cntrs == "Ciudad de los Niños-Virgen de la Esperanza-Virgen de la Victoria-");
 
-	menores.consultar("Ana", cntrs); assert(cntrs.empty());	
+	menores.consultar("Ana", cntrs); assert(cntrs.empty());
 	menores.insertar("Ana", "Virgen de la Esperanza", ok);
-	menores.consultar("Ana", cntrs); assert(cntrs == "Virgen de la Esperanza-");	
+	menores.consultar("Ana", cntrs); assert(cntrs == "Virgen de la Esperanza-");
 	menores.insertar("Ana", "Ciudad de los Niños", ok);
-	menores.consultar("Ana", cntrs); assert(cntrs == "Ciudad de los Niños-Virgen de la Esperanza-");		
+	menores.consultar("Ana", cntrs); assert(cntrs == "Ciudad de los Niños-Virgen de la Esperanza-");
 	menores.insertar("Ana", "Virgen de la Victoria", ok);
-	menores.consultar("Ana", cntrs); assert(cntrs == "Ciudad de los Niños-Virgen de la Esperanza-Virgen de la Victoria-");		
+	menores.consultar("Ana", cntrs); assert(cntrs == "Ciudad de los Niños-Virgen de la Esperanza-Virgen de la Victoria-");
 
-	menores.consultar("Sandra", cntrs); assert(cntrs.empty());	
+	menores.consultar("Sandra", cntrs); assert(cntrs.empty());
 	menores.insertar("Sandra", "Virgen de la Esperanza", ok);
-	menores.consultar("Sandra", cntrs); assert(cntrs == "Virgen de la Esperanza-");	
+	menores.consultar("Sandra", cntrs); assert(cntrs == "Virgen de la Esperanza-");
 	menores.insertar("Sandra", "Ciudad de los Niños", ok);
-	menores.consultar("Sandra", cntrs); assert(cntrs == "Ciudad de los Niños-Virgen de la Esperanza-");		
+	menores.consultar("Sandra", cntrs); assert(cntrs == "Ciudad de los Niños-Virgen de la Esperanza-");
 	menores.insertar("Sandra", "Virgen de la Victoria", ok);
-	menores.consultar("Sandra", cntrs); assert(cntrs == "Ciudad de los Niños-Virgen de la Esperanza-Virgen de la Victoria-");		
+	menores.consultar("Sandra", cntrs); assert(cntrs == "Ciudad de los Niños-Virgen de la Esperanza-Virgen de la Victoria-");
 }
 //--------------------------------------------------------------------------
 void test_num_centros() {
@@ -178,7 +176,7 @@ void test_num_centros() {
 	menores.insertar("Pepe", "Virgen de la Esperanza", ok);
 	menores.insertar("Pepe", "Ciudad de los Niños", ok);
 	menores.insertar("Pepe", "Virgen de la Victoria", ok);
-	assert(menores.num_centros() == 1);	
+	assert(menores.num_centros() == 1);
 
 	menores.insertar("Ana", "Virgen de la Esperanza", ok);
 	menores.insertar("Ana", "Ciudad de los Niños", ok);
@@ -212,20 +210,20 @@ void test_leer_de_fichero()
 
 	out.open("_fic_temp_.txt");
 	out << "Ana" << endl
-	    << "3"   << endl 
-	    << "Ciudad de los Niños" << endl
-	    << "Virgen de la Esperanza" << endl
-	    << "Virgen de la Victoria" << endl;
+		<< "3"   << endl
+		<< "Ciudad de los Niños" << endl
+		<< "Virgen de la Esperanza" << endl
+		<< "Virgen de la Victoria" << endl;
 	out << "Pepe" << endl
-	    << "3"   << endl 
-	    << "Ciudad de los Niños" << endl
-	    << "Virgen de la Esperanza" << endl
-	    << "Virgen de la Victoria" << endl;
+		<< "3"   << endl
+		<< "Ciudad de los Niños" << endl
+		<< "Virgen de la Esperanza" << endl
+		<< "Virgen de la Victoria" << endl;
 	out << "Sandra" << endl
-	    << "3"   << endl 
-	    << "Ciudad de los Niños" << endl
-	    << "Virgen de la Esperanza" << endl
-	    << "Virgen de la Victoria" << endl;
+		<< "3"   << endl
+		<< "Ciudad de los Niños" << endl
+		<< "Virgen de la Esperanza" << endl
+		<< "Virgen de la Victoria" << endl;
 	out.close();
 
 	Menores leido;
@@ -280,10 +278,10 @@ int main()
 	cout << "Test insertar...";
 	test_insertar();
 	cout << "... OK" << endl;
-	/*cout << "Test eliminar...";
+	cout << "Test eliminar...";
 	test_eliminar();
 	cout << "... OK" << endl;
-	cout << "Test consultar...";
+	/*cout << "Test consultar...";
 	test_consultar();
 	cout << "... OK" << endl;
 	cout << "Test num_centros...";
@@ -300,5 +298,6 @@ int main()
 	cout << "... OK" << endl;
 
 	cout << "--- OK." << endl;*/
+	system("pause");
 }
 //--------------------------------------------------------------------------

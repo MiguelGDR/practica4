@@ -44,21 +44,16 @@ void Menores::insertar(const std::string &identificador, std::string centro, boo
     {
         while (ptr != nullptr && !flag) // No está vacia la lista
         {
-            cout << identificador << ptr->id << endl;
             if (ptr->id == identificador) // Si está el id, añado el centro
             {
                 ptr->centros.insertar_centro(centro, insertado); // Inserto el centro
                 flag = 1;                                        // Cambio flag para salir del bucle
-                cout << endl;
-                cout << "Lista ya contenia id, y le anado centro." << endl;
-                cout << endl;
             }
             ptr = ptr->sig;
         }
 
         if (!flag) // Si no estaba el id en la lista, lo añado. Despues añado el centro
         {
-            cout << "No estaba en la lista, lo incluyo." << endl;
             ptr = menores;                                          // Reinicio el puntero
             Lista nuevo_nodo = new Nodo;                            // Creo un nuevo nodo
             nuevo_nodo->id = identificador;                         // donde guardo el id
@@ -70,7 +65,6 @@ void Menores::insertar(const std::string &identificador, std::string centro, boo
             {
                 nuevo_nodo->sig = ptr;
                 menores = nuevo_nodo;
-                cout << "Es primero." << endl;
             }
 
             while (ptr != nullptr && !done)
@@ -84,16 +78,16 @@ void Menores::insertar(const std::string &identificador, std::string centro, boo
                 ptr = ptr->sig;
             }
 
-            if (!done) // Quiere decir que salió del bucle while porque llego al final y no insertó el id
+            if (ptr == nullptr && !done) // Quiere decir que salió del bucle while porque llego al final y no insertó el id
             {
-                ptr = menores;   
-                while(ptr->sig != nullptr)
+                ptr = menores; // Reinicio ptr
+                while (ptr->sig != nullptr)
                 {
                     ptr = ptr->sig;
                 }
-                ptr->sig = new Nodo; 
-                ptr->sig = nuevo_nodo;
-                nuevo_nodo->sig = ptr->sig->sig;
+                ptr->sig = new Nodo;
+                ptr->sig->id = identificador;
+                ptr->sig->centros.insertar_centro(centro, insertado);
                 ptr->sig->sig = nullptr;
             }
         }
@@ -105,10 +99,68 @@ void Menores::insertar(const std::string &identificador, std::string centro, boo
         ptr->centros.insertar_centro(centro, insertado);
         ptr->sig = nullptr;
         menores = ptr;
+    }
+}
 
-        cout << endl;
-        cout << "Lista vacia, añado primer id" << endl;
-        cout << endl;
+void Menores::eliminar(const std::string &identificador, std::string centro, bool &eliminado)
+{
+    Lista ptr = menores;
+    bool flag = 0;
+
+    if (ptr != nullptr)
+    {
+        while (ptr != nullptr && !flag)
+        {
+            if (ptr->id == identificador) // Si encuentro el id, elimino el centro
+            {
+                ptr->centros.eliminar_centro(centro, eliminado); // Elimino el centro
+                flag = 1;
+
+                if (ptr->centros.num_centros() == 0) // Si no quedan centros en la lista del menor, elimino al menor
+                {
+                    bool done = 0; // Variable que usaré para indicar que ya se eliminó al menor
+
+                    if (menores->sig == nullptr && !done) // Caso de que hay que eliminar el único menor de la lista
+                    {
+                        ptr = menores;  // Reinicio
+                        menores = menores->sig;
+                        delete ptr;
+                        ptr = menores;
+
+                        done = 1;
+                        break;
+                    }
+
+                    if (menores->id == identificador && !done) // Caso de que haya que eliminar el primer menor de la lista
+                    {
+                        ptr = menores;
+                        menores = menores->sig; // Eliminado
+                        delete ptr;             // Libero memoria
+                        done = 1;
+                    }
+
+                    if (ptr->sig == nullptr && !done) // Caso de que haya que eliminar el último menor de la lista
+                    {
+                        delete ptr;
+                        ptr = nullptr;
+                        done = 1;
+                    }
+
+                    if(!done)   // Si no es ni el primer ni el último menor. Enlazo la lista
+                    {
+                        Lista ant = nullptr;
+                        ant = menores;
+                        while(ant->sig != ptr)
+                        {
+                            ant = ant->sig;
+                        }
+                        ant->sig = ptr->sig;
+                        delete ptr;
+                    }
+                }
+            }
+            ptr = ptr->sig;
+        }
     }
 }
 
