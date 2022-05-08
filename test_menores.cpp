@@ -303,7 +303,7 @@ int main()
 	cout << "Test num_centros...";
 	test_num_centros();
 	cout << "... OK" << endl;
-	cout << "Test leer_de_fichero...";
+	cout << "Test leer_de_fichero..." << endl;
 	test_leer_de_fichero();
 	cout << "... OK" << endl;
 	/*cout << "Test escribir_a_fichero...";

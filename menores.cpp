@@ -217,33 +217,42 @@ void Menores::leer_de_fichero(const std::string &nom_fic, bool &leido)
 
     ifstream in;
     in.open(nom_fic.c_str());
-    leido = in.fail();
-    cout << endl;
-    cout << leido << endl;
+    leido = !in.fail();
 
     unsigned i;
-    string centro, id;
+    string centro, id, limpiador;
     bool ok;
 
-    if (!leido)
+    if (leido)
     {
         while (!in.eof())
         {
-            getline(in, id) >> ptr->id; // Guardo id
-            cout << ptr->id << endl;
-            in >> i; // Obtengo valor del numero de centros
-            cout << i << endl;
-
-            for (unsigned j = 0; j < i; j++)
+            getline(in, id, '\n'); // Guardo id
+            if (id != "")
             {
-                getline(in, centro);
-                cout << centro << endl;
-                ptr->centros.insertar_centro(centro, ok);
-            }
+                ptr->id = id;
+                cout << ptr->id << endl;
+                if (ptr->id != "")
+                {
+                    in >> i; // Obtengo valor del numero de centros
+                    cout << i << endl;
+                    getline(in, limpiador, '\n');
 
-            ptr->sig = new Nodo;     // Creo nodo
-            ptr->sig->sig = nullptr; // Dejo nullptr
-            ptr = ptr->sig;          // Salto de nodo
+                    for (unsigned j = 0; j < i; j++)
+                    {
+                        getline(in, centro, '\n');
+                        cout << "'" << centro << "'" << endl;
+                        ptr->centros.insertar_centro(centro, ok);
+                    }
+                }
+
+                if (!in.eof())
+                {
+                    ptr->sig = new Nodo;     // Creo nodo
+                    ptr->sig->sig = nullptr; // Dejo nullptr
+                    ptr = ptr->sig;          // Salto de nodo
+                }
+            }
         }
     }
 
