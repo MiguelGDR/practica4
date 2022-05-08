@@ -135,7 +135,7 @@ void test_eliminar()
 
 	assert(menores == Menores());
 }
-/*
+
 //--------------------------------------------------------------------------
 void test_consultar()
 {
@@ -167,6 +167,7 @@ void test_consultar()
 	menores.insertar("Sandra", "Virgen de la Victoria", ok);
 	menores.consultar("Sandra", cntrs); assert(cntrs == "Ciudad de los Niños-Virgen de la Esperanza-Virgen de la Victoria-");
 }
+/*
 //--------------------------------------------------------------------------
 void test_num_centros() {
 	Menores menores;
@@ -281,10 +282,10 @@ int main()
 	cout << "Test eliminar...";
 	test_eliminar();
 	cout << "... OK" << endl;
-	/*cout << "Test consultar...";
+	cout << "Test consultar...";
 	test_consultar();
 	cout << "... OK" << endl;
-	cout << "Test num_centros...";
+	/*cout << "Test num_centros...";
 	test_num_centros();
 	cout << "... OK" << endl;
 	cout << "Test leer_de_fichero...";

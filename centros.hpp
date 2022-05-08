@@ -68,6 +68,7 @@ private:
 	// lista contiene los elementos {2, 4, 6, 8} y buscamos el centro 5, 
 	// debería devolver la posición 3, que es la posición en la que le 
 	// correspondería estar al 5 si estuviera en la lista.)
+	bool ordenLex(std::string s1, std::string s2);
 };
 }
 
