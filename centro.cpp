@@ -13,7 +13,7 @@ namespace bblProgII
 {
     //-------------------------------------
     //-------------------------------------
-    
+
     // Constructor por defecto
     Centros::Centros()
     {
@@ -58,7 +58,19 @@ namespace bblProgII
             n_centros += 1;                  // Incremento el valor del índice
             centros[n_centros - 1] = centro; // Inserto el centro en la última posición
 
-            std::sort(&centros[0], &centros[n_centros - 1]); // Ordena la lista alfabeticamente
+            if (n_centros > 1)
+            {
+                for (int i = n_centros - 1; i >= 0; i--)
+                {
+                    if (!((i - 1) == -1))
+                        if (!ordenLex(centros[i - 1], centros[i])) // Si s2 < s1
+                        {
+                            string aux = centros[i - 1];
+                            centros[i - 1] = centros[i];
+                            centros[i] = aux;
+                        }
+                }
+            }
         }
     }
 
@@ -180,5 +192,62 @@ namespace bblProgII
         }
 
         return j;
+    }
+
+    bool Centros::ordenLex(string s1, string s2)
+    {
+        bool s1menor = false, s2menor = false;
+
+        if (s1.length() >= s2.length())
+        {
+            while (!s1menor && !s2menor)
+            {
+                for (unsigned i = 0; i < s2.length(); i++)
+                {
+                    if (s1[i] < s2[i])
+                    {
+                        s1menor = true;
+                        break;
+                    }
+                    if (s2[i] < s1[i])
+                    {
+                        s2menor = true;
+                        break;
+                    }
+                    if ((i + 1) == s2.length())
+                    {
+                        s2menor = true;
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            while (!s1menor && !s2menor)
+            {
+                for (unsigned i = 0; i < s1.length(); i++)
+                {
+                    if (s1[i] < s2[i])
+                    {
+                        s1menor = true;
+                        break;
+                    }
+                    if (s2[i] < s1[i])
+                    {
+                        s2menor = true;
+                        break;
+                    }
+                    if ((i + 1) == s1.length())
+                    {
+                        s1menor = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return (s1menor * !s2menor); // Si es 1, s1 < s2.
+                                     // Si es 0, s2 > s1.
     }
 }

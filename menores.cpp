@@ -122,7 +122,7 @@ void Menores::eliminar(const std::string &identificador, std::string centro, boo
 
                     if (menores->sig == nullptr && !done) // Caso de que hay que eliminar el único menor de la lista
                     {
-                        ptr = menores;  // Reinicio
+                        ptr = menores; // Reinicio
                         menores = menores->sig;
                         delete ptr;
                         ptr = menores;
@@ -146,11 +146,11 @@ void Menores::eliminar(const std::string &identificador, std::string centro, boo
                         done = 1;
                     }
 
-                    if(!done)   // Si no es ni el primer ni el último menor. Enlazo la lista
+                    if (!done) // Si no es ni el primer ni el último menor. Enlazo la lista
                     {
                         Lista ant = nullptr;
                         ant = menores;
-                        while(ant->sig != ptr)
+                        while (ant->sig != ptr)
                         {
                             ant = ant->sig;
                         }
@@ -161,6 +161,41 @@ void Menores::eliminar(const std::string &identificador, std::string centro, boo
             }
             ptr = ptr->sig;
         }
+    }
+}
+
+void Menores::consultar(const std::string &identificador, std::string &centros) const
+{
+    Lista ptr;
+    ptr = menores;
+
+    bool noId = 0; // Si no está el Id, pongo noId a 1
+
+    if (ptr != nullptr)
+    {
+        while (ptr->id != identificador && !noId) // Busco el identificador
+        {
+            ptr = ptr->sig;
+            if (ptr == nullptr)
+            {
+                noId = 1;
+            }
+        }
+
+        if (ptr->id == identificador)
+        {
+            ptr->centros.consultar_centros(centros);
+        }
+
+        if (noId)   // Si noId esta en 1, quiere decir que ptr == nullptrs
+        {
+            centros = "";
+        }
+    }
+    else
+    {
+        cout << "La lista no contiene a ningún menor." << endl;
+        centros = "";
     }
 }
 
