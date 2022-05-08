@@ -3,6 +3,7 @@
 #include "iostream"
 #include <string>
 #include <cassert>
+#include <fstream>
 
 using namespace std;
 using namespace bblProgII;
@@ -169,32 +170,27 @@ void Menores::consultar(const std::string &identificador, std::string &centros) 
     Lista ptr;
     ptr = menores;
 
-    bool noId = 0; // Si no está el Id, pongo noId a 1
+    bool done = 0;
 
     if (ptr != nullptr)
     {
-        while (ptr->id != identificador && !noId) // Busco el identificador
+        while (ptr != nullptr && !done) // Busco el identificador
         {
-            ptr = ptr->sig;
-            if (ptr == nullptr)
+            if (ptr->id == identificador)
             {
-                noId = 1;
+                ptr->centros.consultar_centros(centros);
+                done = 1;
             }
+            ptr = ptr->sig;
         }
 
-        if (ptr->id == identificador)
-        {
-            ptr->centros.consultar_centros(centros);
-        }
-
-        if (noId)   // Si noId esta en 1, quiere decir que ptr == nullptrs
+        if (!done)
         {
             centros = "";
         }
     }
     else
     {
-        cout << "La lista no contiene a ningún menor." << endl;
         centros = "";
     }
 }
@@ -211,6 +207,49 @@ unsigned Menores::num_centros() const
     }
     return i;
 }
+
+void Menores::leer_de_fichero(const std::string &nom_fic, bool &leido)
+{
+    borrar_lista(menores);
+    menores = new Nodo;
+    menores->sig = nullptr;
+    Lista ptr = menores; // Puntero de ayuda
+
+    ifstream in;
+    in.open(nom_fic.c_str());
+    leido = in.fail();
+    cout << endl;
+    cout << leido << endl;
+
+    unsigned i;
+    string centro, id;
+    bool ok;
+
+    if (!leido)
+    {
+        while (!in.eof())
+        {
+            getline(in, id) >> ptr->id; // Guardo id
+            cout << ptr->id << endl;
+            in >> i; // Obtengo valor del numero de centros
+            cout << i << endl;
+
+            for (unsigned j = 0; j < i; j++)
+            {
+                getline(in, centro);
+                cout << centro << endl;
+                ptr->centros.insertar_centro(centro, ok);
+            }
+
+            ptr->sig = new Nodo;     // Creo nodo
+            ptr->sig->sig = nullptr; // Dejo nullptr
+            ptr = ptr->sig;          // Salto de nodo
+        }
+    }
+
+    in.close();
+}
+
 // Operadores sobrecargados (implementados por el profesor)
 bool Menores::operator==(const Menores &otro_menores)
 {
@@ -300,6 +339,16 @@ Centros Menores::get_centros_pos(unsigned i) const
 //-----------------------------------------------------
 
 // Implementación de métodos privados
+void Menores::borrar_lista(Lista &lista) const
+{
+    Lista ptr;
+    while (lista != nullptr)
+    {
+        ptr = lista;
+        lista = lista->sig;
+        delete ptr;
+    }
+}
 
 bool Menores::ordenLex(string s1, string s2)
 {
