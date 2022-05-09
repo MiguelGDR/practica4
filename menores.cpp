@@ -4,6 +4,7 @@
 #include <string>
 #include <cassert>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 using namespace bblProgII;
@@ -16,18 +17,8 @@ Menores::Menores()
 }
 Menores::Menores(const Menores &otra_menores)
 {
-    Lista ptr, ptr2; // Puntero auxiliar
-    ptr = menores;
-    ptr2 = otra_menores.menores;
-    while (ptr != nullptr) // Si el ptr no es el final
-    {
-        ptr2 = new Nodo;              // Creo un nuevo nodo
-        ptr2 = ptr2->sig;             // Apunto al nuevo nodo
-        ptr2->id = ptr->id;           // Copio el nombre
-        ptr2->centros = ptr->centros; // Copio los centros
-        ptr = ptr->sig;               // Avanzo mi puntero a la siguiente posicion
-        ptr2 = ptr2->sig;             // Apunto al nuevo nodo
-    }
+    Lista ptr = otra_menores.menores;
+    copiar_lista(ptr, menores);
 }
 Menores::~Menores()
 {
@@ -208,6 +199,32 @@ unsigned Menores::num_centros() const
     return i;
 }
 
+void Menores::escribir() const
+{
+    Lista ptr = menores;
+    unsigned num;
+    string centros, centro;
+
+    while (ptr != nullptr)
+    {
+        cout << ptr->id << endl;
+
+        num = ptr->centros.num_centros();
+        cout << num << endl;
+
+        ptr->centros.consultar_centros(centros);
+
+        stringstream INcentros(centros);
+
+        for (unsigned i = 0; i < num; i++)
+        {
+            getline(INcentros, centro, '-');
+            cout << centro << endl;
+        }
+        ptr = ptr->sig;
+    }
+}
+
 void Menores::leer_de_fichero(const std::string &nom_fic, bool &leido)
 {
     borrar_lista(menores);
@@ -241,7 +258,7 @@ void Menores::leer_de_fichero(const std::string &nom_fic, bool &leido)
                     for (unsigned j = 0; j < i; j++)
                     {
                         getline(in, centro, '\n');
-                        cout << "'" << centro << "'" << endl;
+                        cout << centro << endl;
                         ptr->centros.insertar_centro(centro, ok);
                     }
                 }
@@ -257,6 +274,41 @@ void Menores::leer_de_fichero(const std::string &nom_fic, bool &leido)
     }
 
     in.close();
+}
+
+void Menores::escribir_a_fichero(const std::string &nom_fic, bool &escrito) const
+{
+    ofstream out;
+    out.open(nom_fic);
+
+    Lista ptr = menores;
+    string centros, centro;
+    unsigned num;
+    escrito = !out.fail();
+
+    if (escrito)
+    {
+        while (ptr != nullptr)
+        {
+            out << ptr->id << endl;
+
+            num = ptr->centros.num_centros();
+            out << num << endl;
+
+            ptr->centros.consultar_centros(centros);
+
+            stringstream INcentros(centros);
+
+            for (unsigned i = 0; i < num; i++)
+            {
+                getline(INcentros, centro, '-');
+                out << centro << endl;
+            }
+            ptr = ptr->sig;
+        }
+    }
+
+    out.close();
 }
 
 // Operadores sobrecargados (implementados por el profesor)
@@ -356,6 +408,24 @@ void Menores::borrar_lista(Lista &lista) const
         ptr = lista;
         lista = lista->sig;
         delete ptr;
+    }
+}
+
+void Menores::copiar_lista(Lista &destino, Lista origen) const
+{
+    Lista ptr1 = origen;
+    Lista ptr2 = destino;
+
+    while (ptr1 != nullptr)
+    {
+        ptr2 = new Nodo;
+        ptr2->sig = nullptr;
+
+        ptr2->id = ptr1->id;
+        ptr2->centros = ptr1->centros;
+
+        ptr1 = ptr1->sig;
+        ptr2 = ptr2->sig;
     }
 }
 
