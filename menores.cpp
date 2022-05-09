@@ -249,18 +249,16 @@ void Menores::leer_de_fichero(const std::string &nom_fic, bool &leido)
             {
                 ptr->id = id;
                 cout << ptr->id << endl;
-                if (ptr->id != "")
-                {
-                    in >> i; // Obtengo valor del numero de centros
-                    cout << i << endl;
-                    getline(in, limpiador, '\n');
 
-                    for (unsigned j = 0; j < i; j++)
-                    {
-                        getline(in, centro, '\n');
-                        cout << centro << endl;
-                        ptr->centros.insertar_centro(centro, ok);
-                    }
+                in >> i; // Obtengo valor del numero de centros
+                cout << i << endl;
+                getline(in, limpiador, '\n');
+
+                for (unsigned j = 0; j < i; j++)
+                {
+                    getline(in, centro);
+                    cout << centro << endl;
+                    ptr->centros.insertar_centro(centro, ok);
                 }
 
                 if (!in.eof())
