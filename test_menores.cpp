@@ -264,7 +264,7 @@ void test_escribir_a_fichero()
 	menores.insertar("Sandra", "Ciudad de los Niños", ok);
 	menores.insertar("Sandra", "Virgen de la Victoria", ok);
 
-	menores.escribir_a_fichero("_fic_temp2_.txt", ok);
+	menores.escribir_a_fichero("_fic_temp_.txt", ok);
 	assert(ok);
 	//copia.leer_de_fichero("_fic_temp_.txt", ok);
 	//assert(menores == copia);
@@ -303,9 +303,9 @@ int main()
 	cout << "Test num_centros...";
 	test_num_centros();
 	cout << "... OK" << endl;
-	/*cout << "Test leer_de_fichero..." << endl;
+	cout << "Test leer_de_fichero..." << endl;
 	test_leer_de_fichero();
-	cout << "... OK" << endl;*/
+	cout << "... OK" << endl;
 	cout << "Test escribir_a_fichero...";
 	test_escribir_a_fichero();
 	cout << "... OK" << endl;
