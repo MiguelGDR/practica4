@@ -15,7 +15,7 @@ char menu()
     cout << "1.- Insertar centro para un identificador" << endl;
     cout << "2.- Eliminar centro de un identificador" << endl;
     cout << "3.- Consultar centros de un identificador" << endl;
-    cout << "4.- Consultar el número de centros" << endl;
+    cout << "4.- Consultar el numero de identificadores" << endl;
     cout << "5.- Escribir el historial por pantalla" << endl;
     cout << "6.- Leer el historial desde fichero" << endl;
     cout << "7.- Escribir el historial a fichero" << endl;
@@ -101,11 +101,11 @@ int main()
             menores.consultar(id, centros);
             cout << "Esta es la lista de centros de " << id << endl;
             cout << centros << endl;
-            
+
             cout << endl;
-            system("pause");
 
             cout << "Que centro quieres eliminar?: ";
+            getline(cin, centro); // He tenido que usar dos getline debido a que el primero se me activa cuando no debe, y no se porque
             getline(cin, centro);
 
             menores.eliminar(id, centro, eliminado);
@@ -123,6 +123,113 @@ int main()
                 cout << endl;
                 system("pause");
             }
+            break;
+        }
+
+        case '3':
+        {
+            system("cls");
+
+            string id, centros;
+
+            cout << "A quien quieres consultar? (identificador): ";
+            cin >> id;
+
+            menores.consultar(id, centros);
+
+            cout << "Esta es la lista de los centros de '" << id << "':" << endl;
+            cout << centros << endl;
+
+            cout << endl;
+
+            system("pause");
+
+            break;
+        }
+
+        case '4':
+        {
+            system("cls");
+
+            cout << "El numero de identificadores que hay en la lista es '" << menores.num_centros() << "'." << endl;
+
+            cout << endl;
+            system("pause");
+
+            break;
+        }
+
+        case '5':
+        {
+            system("cls");
+
+            cout << "A continuacion se muestra la lista completa (cada identificador, seguido del numero de centros y sus nombres): " << endl;
+            menores.escribir();
+
+            cout << endl;
+            system("pause");
+            break;
+        }
+
+        case '6':
+        {
+            system("cls");
+            string nombre_fic;
+            bool leido;
+
+            cout << "Escriba el nombre del fichero que quiera leer: ";
+            cin >> nombre_fic;
+
+            menores.leer_de_fichero(nombre_fic, leido);
+
+            if (leido)
+            {
+                cout << "Se ha leido correctamente la lista del fichero." << endl;
+            }
+            else
+            {
+                cout << "No se ha leido correctamente la lista del fichero." << endl;
+            }
+
+            cout << endl;
+            system("pause");
+            break;
+        }
+
+        case '7':
+        {
+            system("cls");
+
+            string nombre_fic;
+            bool escrito;
+
+            cout << "Escriba el nombre del fichero donde se guardara la lista: ";
+            cin >> nombre_fic;
+
+            menores.escribir_a_fichero(nombre_fic, escrito);
+
+            if (escrito)
+            {
+                cout << "Se ha guardado correctamente la lista en el fichero." << endl;
+            }
+            else
+            {
+                cout << "No se ha guardado correctamente la lista en el fichero." << endl;
+            }
+
+            cout << endl;
+            system("pause");
+            break;
+        }
+
+        case '8':
+        {
+            system("cls");
+
+            cout << "No he implementado este metodo debido a su no funcionamiento en el test." << endl;
+
+            cout << endl;
+            system("pause");
             break;
         }
         }
